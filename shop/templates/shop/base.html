@@ -13,11 +13,19 @@
     <style type="text/css">
         .material-icons.md-36 { font-size: 36px; }
         .material-icons.md-20 { font-size: 20px; }
+        .flex {
+           height: 400px;
+           background-size: cover;
+           background-attachment: fixed;
+        }
+        .body {
+        height: 2000px;
+         }
     </style>
 
     <title>{% block title %} {% endblock %}</title>
   </head>
-  <body>
+  <body class="body">
   <header>
     <!---a href="{% url 'home' %}">Home</a>
     <a href="{% url 'about' %}">About</a>
