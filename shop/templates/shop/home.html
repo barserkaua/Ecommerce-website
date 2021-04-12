@@ -8,7 +8,41 @@
     <title>Home</title>
     <div class="container-fluid">
         <div class="row">
-            <img src="{% static 'sale2.jpg' %}" class="flex">
+            <img src="{% static 'img/sale3.jpg' %}" class="flex">
+        </div>
+    </div>
+    <div class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-10 mx-auto my-2 text-center">
+                    <h1 class="text-capitalize font-weight-bold">Наші продукти</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% for i in 'aaaaaaaa' %}
+                <div class="col-9 mx-auto col-md-6 col-lg-3">
+                    <div class="card mb-4">
+                        <div class="p-4">
+                             <img class="card-img-top" src="{% static 'img/multifinish.jpeg' %}">
+                        </div>
+                        <div class="card-footer d-flex-justify-content-between" style="background: transparent;
+                                border-color: transparent;">
+                            <p class="font-weight-bold mb-0">
+                                Шпаклівка Мульти-фініш 20 кг
+                            </p>
+                            <h6 class="font-italic mb-0">
+                                ціна:
+                            </h6>
+                            <h5 class="text-danger font-italic mb-0">
+                                200 грн.
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
