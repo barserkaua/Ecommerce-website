@@ -7,13 +7,12 @@
           <div id="navbarSupportedContent" class="collapse navbar-collapse justify-content-between">
            <ul class="navbar-nav">
                <li class="nav-item dropdown"><a href="" class="nav-link text-uppercase font-weight-bold px-3
-               dropdown-toggle" data-bs-toggle="dropdown">Категорії</a>
+               dropdown-toggle" data-bs-toggle="dropdown">Наші товари</a>
                    <div class="dropdown-menu">
-                       <a class="dropdown-item" href="#">Категорія 1</a>
-                       <a class="dropdown-item" href="#">Категорія 2</a>
-                       <a class="dropdown-item" href="#">Категорія 3</a>
-                       <a class="dropdown-item" href="#">Категорія 4</a>
-                       <a class="dropdown-item" href="#">Категорія 5</a>
+                       <a class="dropdown-item" href="{% url 'home' %}">Всі товари</a>
+                       {% for category in links %}
+                       <a class="dropdown-item" href="{{category.get_url}}">{{category.name}}</a>
+                       {% endfor %}
                    </div>
                </li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Контакти</a></li>
