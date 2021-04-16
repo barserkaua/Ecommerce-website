@@ -6,23 +6,26 @@
     <div class="container py-5">
         <div class="row mt-5">
             <div class="col-10 mx-auto col-md-6 my-3">
-                <img src="{% static 'img/ct17.jpg' %}">
+                <img src="{{product.image.url}}">
             </div>
         </div>
     </div>
     <div class="col-10 mx-auto col-md-6 my-3">
         <div>
-            <h1 class="product_title">Грунтівка CT-17</h1>
+            <h1 class="product_title">{{product.name}}</h1>
             <h6 class="font-italic mb-3">
                 ціна:
             </h6>
             <h5 class="text-danger font-italic mb-4">
-                262 грн.
+                {{product.price}}
             </h5>
             <p class="product_desc">Інформація про товар:</p>
-            <p class="text-justify product_text"> Ґрунтівка глибокопроникна для підготовки та укріплення мінеральних
-                поверхонь перед виконанням опоряджувальних робіт всередині та зовні будівель...</p>
-            <p class="text-justify product_text">Кількість обмежена</p>
+            <p class="text-justify product_text">{{product.description}}</p>
+            {% if product.stock <= 0 %}
+            <p class="text-justify product_text">Немає на складі</p>
+            {% else %}
+            <a href="">Добавити в корзину</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

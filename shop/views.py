@@ -17,5 +17,9 @@ def home(request, category_slug=None):
     return render(request, 'shop/home.html', {'category': category_page, 'products': products})
 
 
-def product(request):
-    return render(request, 'shop/product.html')
+def product(request, category_slug, product_slug):
+    try:
+        product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    except Exception as e:
+        raise e
+    return render(request, 'shop/product.html', {'product': product})
