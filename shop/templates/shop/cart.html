@@ -1,0 +1,81 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %} Кошик {% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <br>
+        <div class="text-center product_title">
+            Ваш кошик товарів
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart-table">  <!-- class="table" - створює таблицю -->
+                <thead class="cart-thead">  <!-- Заголовок таблиці -->
+                    <tr>  <!-- Рядок таблиці -->
+                        <th colspan="4">  <!-- Стовпець таблиці  colspan="4"-означає, що займає 4 стовпці-->
+                            Ваші товари
+                        </th>
+                    </tr>
+                </thead>
+                {% for i in '123' %}
+                <tr>
+                    <td>
+                        <a href="">
+                            <img src="{% static 'img/farba.png' %}" width="100" height="100">
+                        </a>
+                    </td>
+                    <td class="text-left">
+                        Фарба
+                        <br>
+                        Код товару: 5
+                        <br>
+                        Ціна товару: 200 грн.
+                        <br>
+                        Сума: 3 х 200 грн.
+                    </td>
+                    <td>
+                        600 грн.
+                    </td>
+                    <td>
+                        <a href=""><i class="material-icons text-success md-30">add_circle_outline</i></a>
+                        <a href=""><i class="material-icons text-danger md-30">remove_circle_outline</i></a>
+                        <a href=""><i class="material-icons text-dark md-30 ">delete</i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart-table">  <!-- class="table" - створює таблицю -->
+                <thead class="cart-thead">  <!-- Заголовок таблиці -->
+                    <tr>  <!-- Рядок таблиці -->
+                        <th colspan="4">  <!-- Стовпець таблиці  colspan="4"-означає, що займає 4 стовпці-->
+                            Ціна за товари
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Будь-ласка перевірки свій кошик перед оплатою.
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>
+                            Загальна сума за товар: <strong>600 грн.</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="mx-auto">  <!-- Кнопка повернення до товарів -->
+                 <a href="">
+                     <button type="button" class="btn btn-lg btn-block btn-dark">
+                        Назад до товарів
+                     </button>
+                 </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
