@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Category, Product
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Category, Product, Cart, CartItem
 from django.http import HttpResponse
 
 
@@ -25,5 +26,60 @@ def product(request, category_slug, product_slug):
     return render(request, 'shop/product.html', {'product': product})
 
 
-def cart(request):
-    return render(request, 'shop/cart.html')
+def _cart_id(request):  # за допомогою framework session ми можемо зберігати наш кошик
+    cart = request.session.session_key
+    if not cart:
+        cart = request.session.create()
+    return cart  # повертає cart (кошик) сесію
+
+
+def add_cart(request, product_id):  # добавляє продукт
+    product = Product.objects.get(id=product_id)
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))  # получает обьект из текущей сесии, если он существует
+    except Cart.DoesNotExist:  # якщо корзина не ісує, то її створять
+        cart = Cart.objects.create(cart_id=_cart_id(request))  # створює об'єк, якщо його немає
+        cart.save()
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart) # якщо об'єкт вже є в корзині,
+        if cart_item.quantity < cart_item.product.stock:
+            cart_item.quantity += 1  # то просто добавиться +1 до кількості
+        cart_item.save()
+    except CartItem.DoesNotExist: # якщо не існує, то створиться в корзині новий продукт
+        cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+        cart_item.save()
+
+    return redirect('cart_detail')
+
+
+def cart_detail(request, total=0, counter=0, cart_items=None): #  витягує всі продукти, і калькулює всю суму за товар
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request)) # ми пробуємо получити об'єкт cart
+        cart_items = CartItem.objects.filter(cart=cart, active=True)
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            counter += cart_item.quantity
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'shop/cart.html', dict(cart_items=cart_items, total=total, counter=counter))
+
+
+def cart_remove(request, product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = get_object_or_404(Product, id=product_id) # знаходимо продукт, кількість якого ми хочемо обновити
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    return redirect('cart_detail')
+
+
+def cart_remove_product(request, product_id):
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    product = get_object_or_404(Product, id=product_id) # знаходимо продукт, кількість якого ми хочемо обновити
+    cart_item = CartItem.objects.get(product=product, cart=cart)
+    cart_item.delete()
+    return redirect('cart_detail')

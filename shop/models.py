@@ -43,3 +43,36 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Cart(models.Model):  # модель корзини
+    cart_id = models.CharField(max_length=250, blank=True)
+    date_added = models.DateField(auto_now_add=True)
+
+    class Meta:  # для сортування та назви таблиці
+        ordering = ['date_added']
+        db_table = 'Cart'
+
+    def __str__(self):
+        return self.cart_id
+
+
+class CartItem(models.Model):  # включає в себе інформацію про продукт, який є в кошику
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)  # по факту, ми додаємо нову таблицю до нашої БД
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    quantity = models.IntegerField()  # кількість товару
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'CartItem'
+
+    def sub_total(self):  # вираховує кількість товару
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return self.product
+
+# Після того, як ми добавили новий функціонал у моделі,
+# необхідно зробити міграцію файлів,
+# python manage.py makemigrations
+# python manage.py migrate

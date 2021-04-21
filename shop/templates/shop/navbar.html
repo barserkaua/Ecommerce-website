@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark container-fluid">
-        <a href="#" class="navbar-brand"><span class="material-icons text-success md-36">handyman</span></a>
-        <a href="#" class="navbar-brand mb-0 h1 text-uppercase">Bars-market</a>
+        <a href="{% url 'home' %}" class="navbar-brand"><span class="material-icons text-success md-36">handyman</span></a>
+        <a href="{% url 'home' %}" class="navbar-brand mb-0 h1 text-uppercase">Bars-market</a>
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,6 +17,13 @@
                </li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Контакти</a></li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Про нас</a></li>
+               {% if item_count > 0 %}
+               <li class="nav-item">
+                   <a href="{% url 'cart_detail' %}" class="nav-link text-uppercase font-weight-bold px-3">
+                       <i class="material-icons cart-icon">shopping_cart</i>{{item_count}}
+                   </a>
+               </li>
+               {% endif %}
            </ul>
         <form class="form-inline">
             <div class="input-group">  <!-- розміщує в одну лінійку-->
