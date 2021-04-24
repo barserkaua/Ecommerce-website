@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Cart, CartItem
 from django.contrib.auth.models import Group, User
 from .forms import SignUpForm
-from django.http import HttpResponse
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
 def home(request, category_slug=None):
@@ -99,3 +99,25 @@ def signUpView(request):
     else:
         form = SignUpForm()
     return render(request, 'shop/signup.html', {'form': form})
+
+
+def loginView(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None: # якщо такий юзер інсує, то ми логінимо
+                login(request, user)
+                return redirect('home')
+            else:
+                return redirect('signup')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'shop/login.html', {'form': form})
+
+
+def logoutView(request):
+    logout(request)
+    return redirect('login')

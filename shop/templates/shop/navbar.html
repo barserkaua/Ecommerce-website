@@ -17,6 +17,38 @@
                </li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Контакти</a></li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Про нас</a></li>
+               {% if request.user.is_authenticated and request.user.first_name %}
+                    <li class="nav-item">
+                        <span class="nav-link text-uppercase font-weight-bold px-3">
+                            Привіт, {{ request.user.first_name }}!
+                            <i class="material-icons cart-icon">person</i>
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="nav-link text-uppercase font-weight-bold px-3">
+                                 Вихід
+                             <i class="material-icons cart-icon">logout</i>
+                        </a>
+                    </li>
+
+               {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'signup' %}" class="nav-link text-uppercase font-weight-bold px-3">
+                                 Зареєструватися
+                             <i class="material-icons cart-icon">app_registration</i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'login' %}" class="nav-link text-uppercase font-weight-bold px-3">
+                                 Вхід
+                             <i class="material-icons cart-icon">login</i>
+                        </a>
+                    </li>
+
+               {% endif %}
+
                {% if item_count > 0 %}
                <li class="nav-item">
                    <a href="{% url 'cart_detail' %}" class="nav-link text-uppercase font-weight-bold px-3">
