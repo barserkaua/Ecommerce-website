@@ -6,7 +6,7 @@
     <div class="container py-5">
         <div class="row mt-5">
             <div class="col-10 mx-auto col-md-6 my-3">
-                <img src="{{product.image.url}}">
+                <img src="{{product.image.url}}" width="400" height="400">
             </div>
         </div>
     </div>
@@ -24,7 +24,11 @@
             {% if product.stock <= 0 %}
             <p class="text-justify product_text">Немає на складі</p>
             {% else %}
-            <a href="{% url 'add_cart' product.id %}">Добавити в кошик</a>
+            <a href="{% url 'add_cart' product.id %}">
+                <button type="button"  class="btn btn-lg btn-block btn-primary px-2 mx-2">
+                    Добавити в кошик
+                </button>
+            </a>
             {% endif %}
         </div>
     </div>

@@ -28,6 +28,7 @@
                     </div>
                 </form>
                {% if request.user.is_authenticated and request.user.first_name %}
+               <ul class="nav">
                     <li class="nav-item">
                         <span class="nav-link text-uppercase font-weight-bold px-3">
                             Привіт, {{ request.user.first_name }}!
@@ -42,14 +43,14 @@
                     </li>
                {% else %}
                     <li class="nav-item me-2">
-                        <a href="{% url 'signup' %}" class="nav-link text-uppercase font-weight-bold px-3">
+                        <a href="{% url 'signup' %}" class="nav-link text-uppercase font-weight-bold">
                                  Зареєструватися
-                             <i class="material-icons cart-icon">app_registration</i>
+                            <i class="material-icons cart-icon">app_registration</i>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'login' %}" class="nav-link text-uppercase font-weight-bold px-3">
-                                 Вхід
+                             Вхід
                              <i class="material-icons cart-icon">login</i>
                         </a>
                     </li>
@@ -61,6 +62,7 @@
                    </a>
                </li>
                {% endif %}
+               <ul>
            </ul>
         </div>
        </div>

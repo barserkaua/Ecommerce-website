@@ -51,7 +51,7 @@
                     <td>
                         {{cart_item.sub_total}} грн.
                     </td>
-                    {% if cart_item.quantity < cart_item.product.stock %} <!-- пофіксити кнопку з додаванням, вияснити чому не працює панель адміна -->
+                    {% if cart_item.quantity < cart_item.product.stock %} <!-- пофіксити кнопку з додаванням -->
                     <td>
                         <a href="{% url 'add_cart' cart_item.product.id %}"><i class="material-icons text-success md-30">add_circle_outline</i></a>
                         <a href="{% url 'cart_remove' cart_item.product.id %}"><i class="material-icons text-danger md-30">remove_circle_outline</i></a>
@@ -91,8 +91,14 @@
             </table>
             <div class="mx-auto">  <!-- Кнопка повернення до товарів -->
                  <a href="{% url 'home' %}">
-                     <button type="button" class="btn btn-lg btn-block btn-dark">
-                        Назад до товарів
+                     <button type="button"  class="btn btn-lg btn-block btn-primary px-2 mx-2">
+                        Продовжити покупки
+                     </button>
+                 </a>
+
+                 <a href="#">
+                     <button type="button" class="btn btn-lg btn-block btn-success px-2">
+                         Оформити замовлення
                      </button>
                  </a>
             </div>
