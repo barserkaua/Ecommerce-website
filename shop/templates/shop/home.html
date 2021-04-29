@@ -44,6 +44,13 @@
                                 {{product.price}}
                             </h5>
                         </div>
+                        <div class="mx-auto text-inline my-2">
+                        <a href="{% url 'add_product' product.id %}">
+                            <button type="button"  class="btn btn-md btn-block btn-success px-2 mx-2">
+                            Купити
+                            </button>
+                        </a>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

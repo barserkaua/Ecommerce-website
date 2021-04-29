@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Product, Cart, CartItem
 from django.contrib.auth.models import Group, User
@@ -87,6 +88,24 @@ def cart_remove_product(request, product_id):
     return redirect('cart_detail')
 
 
+def add_product(request, product_id):  # добавляє продукт
+    product = Product.objects.get(id=product_id)
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))  # получает обьект из текущей сесии, если он существует
+    except Cart.DoesNotExist:  # якщо корзина не ісує, то її створять
+        cart = Cart.objects.create(cart_id=_cart_id(request))  # створює об'єк, якщо його немає
+        cart.save()
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart) # якщо об'єкт вже є в корзині,
+        if cart_item.quantity < cart_item.product.stock:
+            cart_item.quantity += 1  # то просто добавиться +1 до кількості
+        cart_item.save()
+    except CartItem.DoesNotExist: # якщо не існує, то створиться в корзині новий продукт
+        cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+        cart_item.save()
+    return redirect('home')
+
+
 def signUpView(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -121,3 +140,13 @@ def loginView(request):
 def logoutView(request):
     logout(request)
     return redirect('login')
+
+
+def order(request):
+    category = Category.objects.all()
+    curent_user = request.user
+    orders = CartItem.objects.filter(cart_id=curent_user.id)
+    context = {'category': category,
+               'orders': orders,
+               }
+    return render(request, 'shop/orders.html', context)

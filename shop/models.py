@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=250, unique=True)  # ім'я користувача
+    name = models.CharField(max_length=250, unique=True)  # ім'я категорії
     slug = models.SlugField(max_length=250, unique=True)
     description = models.TextField(blank=True)  # опис
     image = models.ImageField(upload_to='category', blank=True)
@@ -21,7 +21,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=250, unique=True)  # ім'я користувача
+    name = models.CharField(max_length=250, unique=True)  # ім'я продукту
     slug = models.SlugField(max_length=250, unique=True)  # як буде відображатися у нашій силці
     description = models.TextField(blank=True)  # опис
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -71,6 +71,11 @@ class CartItem(models.Model):  # включає в себе інформацію
 
     def __str__(self):
         return self.product
+
+
+class Order(models.Model):
+    user_name = models.CharField(max_length=100, unique=True)
+    phone = models.IntegerField(max_length=100)
 
 # Після того, як ми добавили новий функціонал у моделі,
 # необхідно зробити міграцію файлів,
