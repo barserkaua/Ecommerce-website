@@ -1,9 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, Cart, CartItem
+from .models import Category, Product, Cart, CartItem, Order
 from django.contrib.auth.models import Group, User
-from .forms import SignUpForm
+from .forms import SignUpForm, OrderForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 
@@ -150,3 +150,22 @@ def order(request):
                'orders': orders,
                }
     return render(request, 'shop/orders.html', context)
+
+
+def createOrder(request):
+    form = OrderForm()
+
+    error = ''
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('order')
+        else:
+            error = 'Форма не вірна'
+
+    data = {
+        'form': form,
+        'error': error
+    }
+    return render(request, 'shop/cart.html', data)

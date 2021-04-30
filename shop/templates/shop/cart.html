@@ -1,5 +1,6 @@
 {% extends 'shop/base.html' %}
 {% load static %}
+
 {% block title %} Кошик {% endblock %}
 
 {% block content %}
@@ -89,6 +90,7 @@
                     </tr>
                 </tbody>
             </table>
+
             <div class="mx-auto">  <!-- Кнопка повернення до товарів -->
                  <a href="{% url 'home' %}">
                      <button type="button"  class="btn btn-lg btn-block btn-primary px-2 mx-2">
@@ -96,12 +98,18 @@
                      </button>
                  </a>
 
-                 <a href="{% url 'order' %}">
-                     <button type="button" class="btn btn-lg btn-block btn-success px-2">
-                         Оформити замовлення
-                     </button>
-                 </a>
             </div>
+            <div>
+                <form method="post">
+                {% csrf_token %}
+                <p>{{ form1.user_name }}</p><br>
+                {{ form1.phone }}<br>
+                <span>{{ error }}</span>
+                <button type="submit" class="btn btn-lg btn-block btn-success px-2">
+                    Оформити замовлення
+                </button>
+            </form>
+                        </div>
         </div>
     </div>
     {% endif %}
