@@ -13,5 +13,5 @@ urlpatterns = [
     path('account/create/', views.signUpView, name='signup'),
     path('account/login/', views.loginView, name='login'),
     path('account/logout/', views.logoutView, name='logout'),
-    path('cart/order/', views.order, name='order'),
+    path('cart/order/', views.createOrder, name='create_order'),
 ]

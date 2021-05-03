@@ -74,16 +74,14 @@ class CartItem(models.Model):  # включає в себе інформацію
 
 
 class Order(models.Model):
-    user_name = models.CharField("Фамілія/Ім'я", max_length=100, unique=True)
-    phone = models.BigIntegerField("Номер телефону", max_length=15,)
+    user_name = models.CharField("Фамілія/Ім'я", max_length=100)
+    phone = models.BigIntegerField("Номер телефону")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     date_added = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f'Замовник: {self.user_name}'
-
-
 
     class Meta:  # для сортування та назви таблиці
         ordering = ['date_added']

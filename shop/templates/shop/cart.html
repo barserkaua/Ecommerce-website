@@ -97,19 +97,12 @@
                         Продовжити покупки
                      </button>
                  </a>
-
-            </div>
-            <div>
-                <form method="post">
-                {% csrf_token %}
-                <p>{{ form1.user_name }}</p><br>
-                {{ form1.phone }}<br>
-                <span>{{ error }}</span>
+                <a href="{% url 'create_order' %}">
                 <button type="submit" class="btn btn-lg btn-block btn-success px-2">
                     Оформити замовлення
                 </button>
-            </form>
-                        </div>
+               </a>
+            </div>
         </div>
     </div>
     {% endif %}

@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-xxl navbar-dark bg-dark container-fluid">
         <a href="{% url 'home' %}" class="navbar-brand"><span class="material-icons text-success md-36">handyman</span></a>
         <a href="{% url 'home' %}" class="navbar-brand mb-0 h1 text-uppercase">Bars-market</a>
@@ -58,7 +59,8 @@
                {% if item_count > 0 %}
                <li class="nav-item">
                    <a href="{% url 'cart_detail' %}" class="nav-link text-uppercase font-weight-bold px-3">
-                       <i class="material-icons cart-icon">shopping_cart</i>{{item_count}}
+                       <i class="material-icons cart-icon">shopping_cart</i>
+                       <span class="cart-total">{{item_count}}</span>
                    </a>
                </li>
                {% endif %}

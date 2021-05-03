@@ -7,6 +7,7 @@ from .forms import SignUpForm, OrderForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 
+
 # Create your views here.
 def home(request, category_slug=None):
     category_page = None
@@ -44,20 +45,20 @@ def add_cart(request, product_id):  # добавляє продукт
         cart = Cart.objects.create(cart_id=_cart_id(request))  # створює об'єк, якщо його немає
         cart.save()
     try:
-        cart_item = CartItem.objects.get(product=product, cart=cart) # якщо об'єкт вже є в корзині,
+        cart_item = CartItem.objects.get(product=product, cart=cart)  # якщо об'єкт вже є в корзині,
         if cart_item.quantity < cart_item.product.stock:
             cart_item.quantity += 1  # то просто добавиться +1 до кількості
         cart_item.save()
-    except CartItem.DoesNotExist: # якщо не існує, то створиться в корзині новий продукт
+    except CartItem.DoesNotExist:  # якщо не існує, то створиться в корзині новий продукт
         cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
         cart_item.save()
 
     return redirect('cart_detail')
 
 
-def cart_detail(request, total=0, counter=0, cart_items=None): #  витягує всі продукти, і калькулює всю суму за товар
+def cart_detail(request, total=0, counter=0, cart_items=None):  # витягує всі продукти, і калькулює всю суму за товар
     try:
-        cart = Cart.objects.get(cart_id=_cart_id(request)) # ми пробуємо получити об'єкт cart
+        cart = Cart.objects.get(cart_id=_cart_id(request))  # ми пробуємо получити об'єкт cart
         cart_items = CartItem.objects.filter(cart=cart, active=True)
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
@@ -70,7 +71,7 @@ def cart_detail(request, total=0, counter=0, cart_items=None): #  витягує
 
 def cart_remove(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id) # знаходимо продукт, кількість якого ми хочемо обновити
+    product = get_object_or_404(Product, id=product_id)  # знаходимо продукт, кількість якого ми хочемо обновити
     cart_item = CartItem.objects.get(product=product, cart=cart)
     if cart_item.quantity > 1:
         cart_item.quantity -= 1
@@ -82,7 +83,7 @@ def cart_remove(request, product_id):
 
 def cart_remove_product(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id) # знаходимо продукт, кількість якого ми хочемо обновити
+    product = get_object_or_404(Product, id=product_id)  # знаходимо продукт, кількість якого ми хочемо обновити
     cart_item = CartItem.objects.get(product=product, cart=cart)
     cart_item.delete()
     return redirect('cart_detail')
@@ -96,11 +97,11 @@ def add_product(request, product_id):  # добавляє продукт
         cart = Cart.objects.create(cart_id=_cart_id(request))  # створює об'єк, якщо його немає
         cart.save()
     try:
-        cart_item = CartItem.objects.get(product=product, cart=cart) # якщо об'єкт вже є в корзині,
+        cart_item = CartItem.objects.get(product=product, cart=cart)  # якщо об'єкт вже є в корзині,
         if cart_item.quantity < cart_item.product.stock:
             cart_item.quantity += 1  # то просто добавиться +1 до кількості
         cart_item.save()
-    except CartItem.DoesNotExist: # якщо не існує, то створиться в корзині новий продукт
+    except CartItem.DoesNotExist:  # якщо не існує, то створиться в корзині новий продукт
         cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
         cart_item.save()
     return redirect('home')
@@ -127,7 +128,7 @@ def loginView(request):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
-            if user is not None: # якщо такий юзер інсує, то ми логінимо
+            if user is not None:  # якщо такий юзер інсує, то ми логінимо
                 login(request, user)
                 return redirect('home')
             else:
@@ -153,6 +154,12 @@ def order(request):
 
 
 def createOrder(request):
+    product = CartItem.product
+    quantity = CartItem.quantity
+    cart = Cart.objects.get(cart_id=_cart_id(request))
+    cart_items = CartItem.objects.filter(cart=cart, active=True)
+    orders = CartItem.objects.filter()
+
     form = OrderForm()
 
     error = ''
@@ -166,6 +173,6 @@ def createOrder(request):
 
     data = {
         'form': form,
-        'error': error
+        'error': error,
     }
-    return render(request, 'shop/cart.html', data)
+    return render(request, 'shop/orders.html', data)

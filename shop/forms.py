@@ -16,8 +16,6 @@ class SignUpForm(UserCreationForm):
 
 
 class OrderForm(ModelForm):
-    user_name = forms.CharField(max_length=100, required=True)
-    phone = forms.NumberInput()
 
     class Meta:
         model = Order
