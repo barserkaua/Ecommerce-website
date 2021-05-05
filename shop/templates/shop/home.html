@@ -34,22 +34,17 @@
                         </div>
                         <div class="card-footer d-flex-justify-content-between" style="background: transparent;
                                 border-color: transparent;">
-                            <p class="font-weight-bold mb-0">
+                            <p class="font-weight-bold mb-0 text-center">
                                 {{product.name}}
                             </p>
-                            <h6 class="font-italic mb-0">
-                                ціна:
-                            </h6>
-                            <h5 class="text-danger font-italic mb-0">
-                                {{product.price}}
-                            </h5>
                         </div>
-                        <div class="mx-auto text-inline my-2">
-                        <a href="{% url 'add_product' product.id %}">
-                            <button type="button"  class="btn btn-md btn-block btn-success px-2 mx-2">
-                            Купити
-                            </button>
-                        </a>
+
+                        <div class="box-element product">
+                            <a href="{{product.get_url}}"><button  class="btn btn-outline-secondary add-btn my-2" >Переглянути товар</button></a>
+		                    <a class="btn btn-outline-success" href="{% url 'add_product' product.id %}"><strong>Добавити в кошик</strong></a>
+                            <h4 style="display: inline-block; float: right">
+                                {{product.price}} ₴
+                            </h4>
                         </div>
                     </div>
                 </div>

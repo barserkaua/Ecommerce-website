@@ -12,9 +12,9 @@
             Ваш кошик порожній
         </h1>
         <br>
-        <p class="text-center">
+        <h3 class="text-center">
             Нажміть <a href="{% url 'home' %}">сюда</a>, щоб повернутися до товарів
-        </p>
+        </h3>
     </div>
     {% else %}
     <div class="text-center">
@@ -23,6 +23,59 @@
             Ваш кошик товарів
         </div>
     </div>
+    <div class="row mx-5">
+    	<div class="col-lg-12">
+    		<div class="box-element ">
+                <a  class="btn btn-outline-dark mx-5" href="{% url 'home' %}">&#x2190; Продовжити покупки</a>
+                <br>
+                <br>
+                <table class="table">
+		            <tr>
+		            	<th><h5 class="mx-5">Кількість товарів: <strong>{{item_count}}</strong></h5></th>
+		            	<th><h5>Загальна сума товарів: <strong>{{total}} ₴</strong></h5></th>
+		            	<th>
+		            		<a  style="float:right; margin-right:50px;" class="btn btn-success" href="{% url 'create_order' %}">
+                                Оформити замовлення</a>
+		            	</th>
+		            </tr>
+	            </table>
+    		</div>
+
+    		<br>
+    		<div class="box-element">
+
+                <div class="cart-row">
+                    <div style="flex:1"></div>
+		            <div style="flex:2; margin-left:30px;"><strong>Назва товару</strong></div>
+		            <div style="flex:1"><strong>Ціна</strong></div>
+		            <div style="flex:1"><strong>Кількість</strong></div>
+		            <div style="flex:1"><strong>Сума</strong></div>
+                </div>
+                {% for cart_item in cart_items %}
+                <div class="cart-row">
+		            <div style="flex:1" class="mx-auto">
+                        <a href="{{ cart_item.product.get_url }}" >
+                            <img src="{{cart_item.product.image.url}}" class="row-image">
+                        </a>
+                    </div>
+		            <div style="flex:2" style="margin-right:10px;" class=""><a href="{{ cart_item.product.get_url }}" class="nav-link text-uppercase font-weight-bold"><p>{{cart_item.product.name}}</p></a></div>
+		            <div style="flex:1"><p>{{cart_item.product.price}} ₴</p></div>
+		            <div style="flex:1">
+			            <p class="quantity">{{cart_item.quantity}}</p>
+			            <div class="quantity">
+			            	<img class="chg-quantity" src="{% static  'images/arrow-up.png' %}">
+
+			            	<img class="chg-quantity" src="{% static  'images/arrow-down.png' %}">
+			            </div>
+		            </div>
+		            <div style="flex:1"><p>{{cart_item.sub_total}} ₴</p></div>
+	            </div>
+                {% endfor %}
+    		</div>
+
+    	</div>
+    </div>
+
     <div class="row mx-auto">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
             <table class="table cart-table">  <!-- class="table" - створює таблицю -->
@@ -43,7 +96,7 @@
                     <td class="text-left">
                         {{cart_item.product.name}}
                         <br>
-                        Код товару: {{cart_item.product.id}}
+                        Код товару:
                         <br>
                         Ціна товару: {{cart_item.product.price}} грн.
                         <br>
