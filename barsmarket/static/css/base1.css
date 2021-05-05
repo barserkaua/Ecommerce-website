@@ -37,3 +37,26 @@ body {
 .custom_div {
     margin-bottom: 20px !important;
 }
+
+.counter--green {
+    background: #00a046;
+}
+
+.counter {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(20%,-10%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 50px;
+    font-size: 12px;
+    color: #fff;
+}
+

@@ -17,8 +17,8 @@
                    </div>
                </li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Контакти</a></li>
-               <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Про нас</a></li>
-               <form class="form-inline">
+               <li class="nav-item navbarmain"><a href="" class="nav-link text-uppercase font-weight-bold px-3 navbarmain">Про нас</a></li>
+               <form class="form-inline navbarmain">
                     <div class="input-group">  <!-- розміщує в одну лінійку-->
                         <input class="form-control me-2" type="text" placeholder="Шукати">
                         <div>
@@ -58,9 +58,11 @@
                {% endif %}
                {% if item_count > 0 %}
                <li class="nav-item">
-                   <a href="{% url 'cart_detail' %}" class="nav-link text-uppercase font-weight-bold px-3">
+
+                   <a href="{% url 'cart_detail' %}" class="nav-link text-uppercase font-weight-bold px-1 text-center">
                        <i class="material-icons cart-icon">shopping_cart</i>
-                       <span class="cart-total">{{item_count}}</span>
+
+                       <i class="fas fa-shopping-cart cart-icon">{{item_count}}</i>
                    </a>
                </li>
                {% endif %}
