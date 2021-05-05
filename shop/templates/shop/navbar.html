@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="navbar navbar-expand-xxl navbar-dark bg-dark container-fluid">
+<nav class="navbar navbar-expand-xl navbar-dark bg-dark container-fluid">
         <a href="{% url 'home' %}" class="navbar-brand"><span class="material-icons text-success md-36">handyman</span></a>
         <a href="{% url 'home' %}" class="navbar-brand mb-0 h1 text-uppercase">Bars-market</a>
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,48 +29,37 @@
                     </div>
                 </form>
                {% if request.user.is_authenticated and request.user.first_name %}
-               <ul class="nav">
+               <ul class="navbar-nav mr-auto px-1">
                     <li class="nav-item">
                         <span class="nav-link text-uppercase font-weight-bold px-3">
                             Привіт, {{ request.user.first_name }}!
-                            <i class="material-icons cart-icon">person</i>
                         </span>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'logout' %}" class="nav-link text-uppercase font-weight-bold px-3">
                                  Вихід
-                             <i class="material-icons cart-icon">logout</i>
                         </a>
                     </li>
                {% else %}
                     <li class="nav-item me-2">
                         <a href="{% url 'signup' %}" class="nav-link text-uppercase font-weight-bold">
-                                 Зареєструватися
-                            <i class="material-icons cart-icon">app_registration</i>
+                            Зареєструватися
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'login' %}" class="nav-link text-uppercase font-weight-bold px-3">
                              Вхід
-                             <i class="material-icons cart-icon">login</i>
                         </a>
                     </li>
-                   </ul>
                {% endif %}
                {% if item_count > 0 %}
-
-               <div class="form-inline my-2 my-lg-0">
-
-                    <a href="{% url 'cart_detail' %}">
-                        <img  id="cart-icon" src="{% static 'img/cart.png' %}">
-                    </a>
-                    <p id="cart-total">{{item_count}}</p>
-
-                </div>
-
+                    <li class="nav-item">
+                        <a href="" class="nav-link text-uppercase font-weight-bold px-3">
+                            <i class="material-icons cart-icon">shopping_cart</i>{{item_count}}
+                        </a>
+                    </li>
+                </ul>
                {% endif %}
-
-
-        </div>
-       </div>
+             </div>
+           </div>
     </nav>
