@@ -86,12 +86,17 @@
 	display: inline-block;
 	font-weight: 700;
 	padding-right:10px;
+	text-align: justify;
+}
 
-
+.quantity-p {
+	display: inline-block;
+	font-weight: 400;
+	padding-right:10px;
 }
 
 .chg-quantity{
-	width: 12px;
+	width: 10px;
 	cursor: pointer;
 	display: block;
 	margin-top: 5px;
