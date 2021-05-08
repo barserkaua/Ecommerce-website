@@ -153,26 +153,34 @@ def order(request):
     return render(request, 'shop/orders.html', context)
 
 
-def createOrder(request):
-    product = CartItem.product
-    quantity = CartItem.quantity
-    cart = Cart.objects.get(cart_id=_cart_id(request))
-    cart_items = CartItem.objects.filter(cart=cart, active=True)
-    orders = CartItem.objects.filter()
+def createOrder(request, total=0, counter=0, cart_items=None):
+    # product = CartItem.product
+    # quantity = CartItem.quantity
+    # cart = Cart.objects.get(cart_id=_cart_id(request))
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))  # ми пробуємо получити об'єкт cart
+        cart_items = CartItem.objects.filter(cart=cart, active=True)
+        for cart_item in cart_items:
+            total += (cart_item.product.price * cart_item.quantity)
+            counter += cart_item.quantity
+    except ObjectDoesNotExist:
+        pass
 
-    form = OrderForm()
+    # return render(request, 'shop/cart.html', dict(cart_items=cart_items, total=total, counter=counter))
 
-    error = ''
-    if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('order')
-        else:
-            error = 'Форма не вірна'
-
-    data = {
-        'form': form,
-        'error': error,
-    }
-    return render(request, 'shop/orders.html', data)
+    # form = OrderForm()
+# 
+    # error = ''
+    # if request.method == 'POST':
+    #     form = OrderForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('order')
+    #     else:
+    #         error = 'Форма не вірна'
+# 
+    # data = {
+    #     'form': form,
+    #     'error': error,
+    # }
+    return render(request, 'shop/orders.html', dict(cart_items=cart_items, total=total, counter=counter))

@@ -1,0 +1,109 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %} Кошик {% endblock %}
+
+{% block content %}
+
+    {% if not cart_items %}  <!-- якщо Об'єкт пустий -->
+    <div class="text-center">
+        <br>
+        <h1 class="text-center product_title">
+            Ваш кошик порожній
+        </h1>
+        <br>
+        <h3 class="text-center">
+            Нажміть <a href="{% url 'home' %}">сюда</a>, щоб повернутися до товарів
+        </h3>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <br>
+        <div class="text-center product_title">
+            Ваш кошик товарів
+        </div>
+    </div>
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart-table">  <!-- class="table" - створює таблицю -->
+                <thead class="cart-thead">  <!-- Заголовок таблиці -->
+                    <tr>  <!-- Рядок таблиці -->
+                        <th colspan="4">  <!-- Стовпець таблиці  colspan="4"-означає, що займає 4 стовпці-->
+                            Ваші товари
+                        </th>
+                    </tr>
+                </thead>
+                {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                        <a href="{{ cart_item.product.get_url }}">
+                            <img src="{{cart_item.product.image.url}}" width="100" height="100">
+                        </a>
+                    </td>
+                    <td class="text-left">
+                        {{cart_item.product.name}}
+                        <br>
+                        Код товару: {{cart_item.product.id}}
+                        <br>
+                        Ціна товару: {{cart_item.product.price}} грн.
+                        <br>
+                        Сума: {{cart_item.quantity}} x {{cart_item.product.price}} грн.
+                    </td>
+                    <td>
+                        {{cart_item.sub_total}} грн.
+                    </td>
+                    {% if cart_item.quantity < cart_item.product.stock %} <!-- пофіксити кнопку з додаванням -->
+                    <td>
+                        <a href="{% url 'add_cart' cart_item.product.id %}"><i class="material-icons text-success md-30">add_circle_outline</i></a>
+                        <a href="{% url 'cart_remove' cart_item.product.id %}"><i class="material-icons text-danger md-30">remove_circle_outline</i></a>
+                        <a href="{% url 'cart_remove_product' cart_item.product.id %}"><i class="material-icons text-dark md-30 ">delete</i></a>
+                    </td>
+                    {% else %}
+                    <td>
+                        <a href="{% url 'cart_remove' cart_item.product.id %}"><i class="material-icons text-danger md-30">remove_circle_outline</i></a>
+                        <a href="{% url 'cart_remove_product' cart_item.product.id %}"><i class="material-icons text-dark md-30 ">delete</i></a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table cart-table">  <!-- class="table" - створює таблицю -->
+                <thead class="cart-thead">  <!-- Заголовок таблиці -->
+                    <tr>  <!-- Рядок таблиці -->
+                        <th colspan="4">  <!-- Стовпець таблиці  colspan="4"-означає, що займає 4 стовпці-->
+                            Оформлення замовлення
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Будь-ласка перевірки свій кошик перед оплатою.
+                        </td>
+                    </tr>
+                    <tr class="text-left">
+                        <td>
+                            Загальна сума за товар: <strong>{{total}} грн.</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mx-auto">  <!-- Кнопка повернення до товарів -->
+                 <a href="{% url 'home' %}">
+                     <button type="button"  class="btn btn-lg btn-block btn-primary px-2 mx-2">
+                        Продовжити покупки
+                     </button>
+                 </a>
+                <a href="{% url 'create_order' %}">
+                <button type="submit" class="btn btn-lg btn-block btn-success px-2">
+                    Оформити замовлення
+                </button>
+               </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
