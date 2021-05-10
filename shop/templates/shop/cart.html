@@ -1,0 +1,89 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %} Кошик {% endblock %}
+
+{% block content %}
+
+    {% if not cart_items %}  <!-- якщо Об'єкт пустий -->
+    <div class="text-center">
+        <br>
+        <h1 class="text-center product_title">
+            Ваш кошик порожній
+        </h1>
+        <br>
+        <h3 class="text-center">
+            Нажміть <a href="{% url 'home' %}">сюда</a>, щоб повернутися до товарів
+        </h3>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <br>
+        <div class="text-center product_title">
+            Ваш кошик товарів
+        </div>
+    </div>
+    <div class="row mx-5">
+    	<div class="col-lg-12">
+    		<div class="box-element ">
+                <a  class="btn btn-outline-dark mx-5" href="{% url 'home' %}">&#x2190; Продовжити покупки</a>
+                <br>
+                <br>
+                <table class="table">
+		            <tr>
+		            	<th><h5 class="mx-5">Кількість товарів: <strong>{{item_count}}</strong></h5></th>
+		            	<th><h5>Загальна сума товарів: <strong>{{total}} ₴</strong></h5></th>
+		            	<th>
+		            		<a  style="float:right; margin-right:50px;" class="btn btn-success" href="{% url 'create_order' %}">
+                                Оформити замовлення</a>
+		            	</th>
+		            </tr>
+	            </table>
+    		</div>
+
+    		<br>
+    		<div class="box-element">
+
+                <div class="cart-row">
+                    <div style="flex:1"></div>
+		            <div style="flex:2; margin-left:30px;"><strong>Назва товару</strong></div>
+		            <div style="flex:1"><strong>Ціна</strong></div>
+		            <div style="flex:1"><strong>Кількість</strong></div>
+		            <div style="flex:1"><strong>Сума</strong></div>
+                </div>
+                {% for cart_item in cart_items %}
+                <div class="cart-row">
+		            <div style="flex:1" class="mx-auto">
+                        <a href="{{ cart_item.product.get_url }}" >
+                            <img src="{{cart_item.product.image.url}}" class="row-image">
+                        </a>
+                    </div>
+		            <div style="flex:2" style="margin-right:10px;" class=""><a href="{{ cart_item.product.get_url }}" class="nav-link text-uppercase font-weight-bold"><p>{{cart_item.product.name}}</p></a></div>
+		            <div style="flex:1"><p class=""><strong>{{cart_item.product.price}} ₴</strong></p></div>
+		            <div style="flex:1">
+                        <p class="quantity">{{cart_item.quantity}}</p>
+			            <div class="quantity" >
+			            	{% if cart_item.quantity < cart_item.product.stock %}
+                            <td>
+                                <a href="{% url 'add_cart' cart_item.product.id %}" class="chg-quantity"><img class="chg-quantity" src="{% static  'img/arrow-up.png' %}"></a>
+                                <a href="{% url 'cart_remove' cart_item.product.id %}" class="chg-quantity"><img class="chg-quantity" src="{% static  'img/arrow-down.png' %}"></a>
+                            </td>
+                            {% else %}
+                            <td>
+                                <a href="{% url 'cart_remove' cart_item.product.id %}"><img class="chg-quantity" src="{% static  'img/arrow-up.png' %}"></a>
+                            </td>
+
+                            {% endif %}
+
+			            </div>
+		            </div>
+		            <div style="flex:1"><p><strong>{{cart_item.sub_total}} ₴</strong></p></div>
+	            </div>
+                {% endfor %}
+    		</div>
+
+    	</div>
+    </div>
+
+    {% endif %}
+{% endblock %}

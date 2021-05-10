@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %} Продукт {% endblock %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row mt-5">
+            <div class="col-10 mx-auto col-md-6 my-3">
+                <img src="{{product.image.url}}" width="400" height="400">
+            </div>
+        </div>
+    </div>
+    <div class="col-10 mx-auto col-md-6 my-3">
+        <div>
+            <h1 class="product_title">{{product.name}}</h1>
+            <h6 class="font-italic mb-3">
+                ціна:
+            </h6>
+            <h5 class="text-danger font-italic mb-4">
+                {{product.price}}
+            </h5>
+            <p class="product_desc">Інформація про товар:</p>
+            <p class="text-justify product_text">{{product.description}}</p>
+            {% if product.stock <= 0 %}
+            <p class="text-justify product_text">Немає на складі</p>
+            {% else %}
+            <a href="{% url 'add_product' product.id %}">
+                <button type="button"  class="btn btn-lg btn-block btn-primary px-2 mx-2">
+                    Добавити в кошик
+                </button>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
