@@ -10,7 +10,7 @@ class Category(models.Model):
 
     class Meta:  # даний клас змінює назву
         ordering = ('name',)  # упорядковує по імені
-        verbose_name = 'category'
+        verbose_name = 'category'  # show our customer detail in db
         verbose_name_plural = 'categories'
 
     def get_url(self):
@@ -35,7 +35,7 @@ class Product(models.Model):
     class Meta:  # даний клас змінює назву
         ordering = ('name',)  # упорядковує по імені (щоб наші зміни вступили в силу
         # їх потрібно мігрувати
-        verbose_name = 'product'
+        verbose_name = 'product'  # show our customer detail in db
         verbose_name_plural = 'products'
 
     def get_url(self):
@@ -51,7 +51,7 @@ class Cart(models.Model):  # модель корзини
 
     class Meta:  # для сортування та назви таблиці
         ordering = ['date_added']
-        db_table = 'Cart'
+        db_table = 'Cart'  # show class Cart in our db but we can`t see detail, and can`t pick this table
 
     def __str__(self):
         return self.cart_id
@@ -64,7 +64,7 @@ class CartItem(models.Model):  # включає в себе інформацію
     active = models.BooleanField(default=True)
 
     class Meta:
-        db_table = 'CartItem'
+        db_table = 'CartItem'  # show class CartItem in our db but we can`t see detail, and can`t pick this table
 
     def sub_total(self):  # вираховує кількість товару
         return self.product.price * self.quantity
@@ -103,14 +103,14 @@ class Order(models.Model):
     region = models.CharField(max_length=100, choices=CHOICE_REGION, default=LVIV)
     shipping = models.CharField(max_length=50, choices=CHOICE_SHIPPING, default=None)
     payment = models.CharField(max_length=50, choices=CHOICE_PAYMENT, blank=True)
-    date_added = models.DateField(auto_now_add=True)
+    date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Замовник: {self.user_name}'
 
     class Meta:  # для сортування та назви таблиці
-        ordering = ['date_added']
-        db_table = 'Order'
+        verbose_name = 'order'    # show our customer detail in db
+        verbose_name_plural = 'order'
 
     def dict(self):
         obj = {

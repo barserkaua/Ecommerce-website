@@ -21,6 +21,7 @@ class OrderForm(ModelForm):
         ('волиська область', 'Волинська область'),
         ('тернопільська область', 'Тернопільська область'),
         ('рівненська область', 'Рівненська область'),
+        ('київська область', 'Київська область'),
     }
 
     CHOICE_SHIPPING = {
@@ -34,9 +35,9 @@ class OrderForm(ModelForm):
         ('на карточку', 'На карточку'),
     }
 
-    user_name = forms.CharField(label="Прізвище/Ім'я", max_length=100, required=True)
-    email = forms.EmailField(max_length=250, help_text='Приклад: eg.youremail@gmail.com')
-    phone = forms.IntegerField()
+    # user_name = forms.CharField(label="Прізвище/Ім'я", max_length=100, required=True)
+    # email = forms.EmailField(max_length=250, help_text='Приклад: eg.youremail@gmail.com')
+    # phone = forms.TextInput()
     region = forms.ChoiceField(choices=CHOICE_REGION)
     shipping = forms.ChoiceField(choices=CHOICE_SHIPPING)
     payment = forms.ChoiceField(choices=CHOICE_PAYMENT)
@@ -49,6 +50,10 @@ class OrderForm(ModelForm):
             "user_name": TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': "Прізвище/Ім'я"
+            }),
+            "email": TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'
             }),
             "phone": TextInput(attrs={
                 'class': 'form-control',

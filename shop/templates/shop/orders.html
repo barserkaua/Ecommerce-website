@@ -17,15 +17,12 @@
                         <p class="text-center">Контактні дані замовника</p>
                         <hr>
                         <div class="form-field">
-                            <label>Прізвище: </label>
                             {{ form.user_name }}
                         </div>
                         <div class="form-field">
-                            <label>Email: </label><br>
                             {{ form.email }}
                         </div>
                         <div class="form-field">
-                           <label>Номер телефону: </label><br>
                             {{ form.phone }}
                         </div>
                     </div>
@@ -54,7 +51,7 @@
                         </div>
                     </div>
                     <hr>
-                    <a href="{% url 'successfully_order' pk=post.pk %}"><button class="btn btn-success" type="submit">Продовжити</button></a>
+                    <a href="{% url 'successfully_order' %}"><button class="btn btn-success" type="submit">Продовжити</button></a>
                 </form>   
             </div>
             <br>
