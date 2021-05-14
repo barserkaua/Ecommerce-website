@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'shop',
     'crispy_forms',
     'phone_field',
+    'search.apps.SearchConfig',
+    'django.contrib.postgres',
+    # 'bootstrap4',
 ]
 
 MIDDLEWARE = [

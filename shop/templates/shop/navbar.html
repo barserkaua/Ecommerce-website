@@ -18,7 +18,7 @@
                </li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3">Контакти</a></li>
                <li class="nav-item"><a href="" class="nav-link text-uppercase font-weight-bold px-3 navbarmain">Про нас</a></li>
-               <form class="form-inline">
+               <form class="form-inline" action="{% url 'search:search_result' %}" method="get">
                     <div class="input-group">  <!-- розміщує в одну лінійку-->
                         <input class="form-control me-2" type="text" placeholder="Шукати">
                         <div>

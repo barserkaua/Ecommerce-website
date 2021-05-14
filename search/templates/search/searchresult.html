@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+
+{% load static %}
+
+{% block title %} Результат пошуку {% endblock %}
+
+{% block content %}
+
+    <h1>Поиск</h1>
+    {% if product_lists %}
+        {% for product in product_lists %}
+            <article>
+                <a href="{{ product.get_absolute_url }}">
+                    <h2>{{ product.name }}</h2>
+                </a>
+                {{ product.desctription|safe }}
+                <p><a class="btn btn-default btn-sm" href="{{ product.get_absolute_url }}">Читать далее</a></p>
+            </article>
+        {% endfor %}
+
+    {% else %}
+        <p>Не найдено публикаций по вашему запросу<br>Попробуйте повторить запрос с другой формулировкой</p>
+    {% endif %}
+
+{% endblock %}
