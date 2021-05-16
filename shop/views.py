@@ -8,8 +8,23 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 
 
-# Create your views here.
+def search(request):
+    if request.method == "POST":
+        searched = request.POST['searched'] #
+        search_product = Product.objects.filter(name__contains=searched)
+        return render(request, 'shop/searchresult.html', {'searched': searched, 'search_product':search_product})
+    else:
+        return render(request, 'shop/searchresult.html', {'product': product})
+
+
 def home(request, category_slug=None):
+    search_query = request.GET.get('search', '')
+
+    # if search_query:
+    #     posts = Product.objects.filter(name__icontains=search_query)
+    # else:
+    #     posts = Product.objects.all()
+
     category_page = None
     products = None
 

@@ -40,9 +40,6 @@ INSTALLED_APPS = [
     'shop',
     'crispy_forms',
     'phone_field',
-    'search.apps.SearchConfig',
-    'django.contrib.postgres',
-    # 'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'barsmarket.urls'
