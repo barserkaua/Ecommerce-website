@@ -6,14 +6,29 @@
 
 {% block content %}
     <title>Bars-market</title>
-    <section class="slideshow">
-        <div class="slideshow-container slide">
-            <img src="{% static 'img/sale3.jpg' %}"/>
-            <img src="{% static 'img/sale2.jpg' %}"/>
-            <img src="{% static 'img/sale4.jpg' %}"/>
-            <img src="{% static 'img/sale.png' %}"/>
+    <section class="slideshow ">
+        <div class="slideshow-container">
+             <div class="mySlides">
+                <img src="{% static 'img/sale6.jpg' %}"/>
+             </div>
+             <div class="mySlides">
+                <img src="{% static 'img/sale2.jpg' %}"/>
+             </div>
+             <div class="mySlides">
+                <img src="{% static 'img/sale5.jpg' %}"/>
+             </div>
+             <div class="mySlides">
+                <img src="{% static 'img/sale1.png' %}"/>
+             </div>
         </div>
     </section>
+        <br>
+        <div style="text-align:center">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
     <div class="py-4">
         <div class="container">
             <div class="row">
@@ -23,6 +38,65 @@
             </div>
         </div>
     </div>
+    <div class="row mx-5">
+    	<div class="col-lg-12">
+    		<div class="box-element ">
+                <form class="table" method="get" action="{% url 'home' %}">
+                    <div class="column is-multiline">
+
+                        <div class="column is-4">
+                            <h2 class="is-size-5">Some query</h2>
+                            <div class="field">
+                                <label>Search term</label>
+                                <div class="control">
+                                    <input type="text" name="query" class="input" value="{{ query }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-12">
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-danger">Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-4">
+                            <h2 class="is-size-5">Price range</h2>
+                            <div class="field">
+                                <label>From</label>
+                                <div class="control">
+                                    <input type="number" name="price_from" class="input" value="{{ price_from }}">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>To</label>
+                                <div class="control">
+                                    <input type="number" name="price_to" class="input" value="{{ price_to }}">
+                                </div>
+                            </div>
+                        </div>
+                         <div class="column is-4">
+                            <h2 class="is-size-5">Sorting</h2>
+                            <div class="field">
+                                <div class="select">
+                                    <select name="sorting">
+                                        <!-- fix this shit-->
+                                        <option value="-date_added"{% if sorting == '-date_added' %} selected {% endif %}>Newest first</option>
+                                        <option value="price"{% if sorting == "price" %} selected {% endif %}>Price low-high</option>
+                                        <option value="-price"{% if sorting == "-price" %} selected {% endif %}>Price high-low</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+	            </form>
+    		</div>
+        </div>
+    </div>
+    <br>
     <div class="container">
         <div class="row">
             {% for product in products %}

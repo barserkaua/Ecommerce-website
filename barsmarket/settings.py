@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'barsmarketdb',
         'USER': 'postgres',
-
+        'PASSWORD': '67805612V',
         'HOST': 'localhost',
         'PORT': '5432',
     }
