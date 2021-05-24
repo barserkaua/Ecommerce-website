@@ -11,8 +11,12 @@ from django.contrib.auth import login, authenticate, logout
 def search(request):
     if request.method == "POST":
         searched = request.POST['searched']  #
-        search_product = Product.objects.filter(name__contains=searched)
-        return render(request, 'shop/searchresult.html', {'searched': searched, 'search_product': search_product})
+        search_product_name = Product.objects.filter(name__contains=searched)
+        context = {
+            'searched': searched,
+            'search_product_name': search_product_name,
+        }
+        return render(request, 'shop/searchresult.html', context)
     else:
         return render(request, 'shop/searchresult.html', {'product': product})
 
@@ -22,7 +26,7 @@ def price_search(request):
     instock = request.GET.get('instock')
     price_from = request.GET.get('price_from', 0)
     price_to = request.GET.get('price_to', 100000)
-    sorting = request.GET.get('sortin', '-date_added')
+    sorting = request.GET.get('sorting', '-date_added')
     search_price = Product.objects.filter(price__contains=price_to)
     products = Product.objects.filter(Q(name__icontains=query) |
                                       Q(description__icontains=query)).filter(price__gte=price_from).filter(price__lte=price_to)

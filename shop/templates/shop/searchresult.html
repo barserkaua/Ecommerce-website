@@ -16,28 +16,28 @@
 
     <div class="container">
         <div class="row">
-            {% for product in search_product %}
+            {% for search_name in search_product_name %}
                 <div class="col-9 mx-auto col-md-6 col-lg-3">
                     <div class="card mb-4">
                         <div class="p-4">
                             <ul class="scale">
-                                <a href="{{product.get_url}}">
-                                    <img class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}">
+                                <a href="{{search_name.get_url}}">
+                                    <img class="card-img-top" src="{{search_name.image.url}}" alt="{{search_name.name}}">
                                 </a>
                             </ul>
                         </div>
                         <div class="card-footer d-flex-justify-content-between" style="background: transparent;
                                 border-color: transparent;">
                             <p class="font-weight-bold mb-0 text-center">
-                                {{product}}
+                                {{search_name}}
                             </p>
                         </div>
 
                         <div class="box-element product">
-                            <a href="{{product.get_url}}"><button  class="btn btn-outline-secondary add-btn my-2" >Переглянути товар</button></a>
-		                    <a class="btn btn-outline-success" href="{% url 'add_product' product.id %}"><strong>Добавити в кошик</strong></a>
+                            <a href="{{search_name.get_url}}"><button  class="btn btn-outline-secondary add-btn my-2" >Переглянути товар</button></a>
+		                    <a class="btn btn-outline-success" href="{% url 'add_product' search_name.id %}"><strong>Добавити в кошик</strong></a>
                             <h4 style="display: inline-block; float: right">
-                                {{product.price}} ₴
+                                {{search_name.price}} ₴
                             </h4>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
         </div>
     </div>
     {% else %}
-        <h1>Hey, you forgot to search something...</h1>
+        <h1>Даний товар відсутній...</h1>
     {% endif %}
 
 {% endblock %}
