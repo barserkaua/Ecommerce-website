@@ -16,4 +16,5 @@ urlpatterns = [
     path('cart/order/', views.createOrder, name='create_order'),
     path('cart/order/successfully/', views.successfullyOrder, name='successfully_order'),
     path('search/', views.search, name='search'),
+    path('sort-cheap/', views.search, name='search'),
 ]

@@ -46,18 +46,14 @@
                     <div class="container">
                         <div class="row align-items-start text-center">
                             <div class="col">
-                                <h2>Some query</h2>
-                                <div class="field">
-                                    <label>Search term</label>
-                                    <div class="control">
-                                        <input type="search" name="searched" placeholder="Шукати">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label>In stock</label>
-                                    <div class="control">
-                                        <input type="checkbox" name="instock"{% if instock %}checked="checked"{% endif %}>
-                                    </div>
+                                <h2 class="card-header">Price</h2>
+                                <div class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <input type="range" id="rangeInput" min="0" max="100" oninput="maxPrice.value=this.value"/>
+                                    </li>
+                                    <li class="list-group-item">
+                                        Max: <input type="number" id="maxPrice" onkeyup="rangeInput.value=this.value" min="0" max="100"/>
+                                    </li>
                                 </div>
                                 <div class="field">
                                     <div>
@@ -83,16 +79,11 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <h2 class="is-size-5">Sorting</h2>
-                                <div class="field">
-                                    <div class="select">
-                                        <select name="sorting">
-                                            <!-- fix this shit-->
-                                            <option value="-date_added"{% if sorting == '-date_added' %} selected {% endif %}>Newest first</option>
-                                            <option value="price"{% if sorting == "price" %} selected {% endif %}>Price low-high</option>
-                                            <option value="-price"{% if sorting == "-price" %} selected {% endif %}>Price high-low</option>
-                                        </select>
-                                    </div>
+                                <a href="" class="btn btn-secondary text-uppercase font-weight-bold px-3
+                                      dropdown-toggle" data-bs-toggle="dropdown" >Сортувати по...</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'home' %}">Від дешевих до дорогих</a>
+                                    <a class="dropdown-item" href="{{category.get_url}}">Від дорогих до дешевих</a>
                                 </div>
                             </div>
                         </div>
