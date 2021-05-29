@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'shop.context_processors.menu_links',
                 'shop.context_processors.counter',
+                'shop.template_context.get_filters',
             ],
         },
     },

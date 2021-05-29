@@ -2,9 +2,11 @@
 
 {% load static %}
 
+
 {% block title %} Home {% endblock %}
 
 {% block content %}
+<script type="text/javascript" src="{% static 'shop/product-filter.js' %}"></script>
     <title>Bars-market</title>
     <section class="slideshow ">
         <div class="slideshow-container">
@@ -49,33 +51,15 @@
                                 <h2 class="card-header">Price</h2>
                                 <div class="list-group list-group-flush">
                                     <li class="list-group-item">
-                                        <input type="range" id="rangeInput" min="0" max="100" oninput="maxPrice.value=this.value"/>
+                                        <input type="range" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}}
+                                               min={{minMaxPrice.price__min}} id="rangeInput" oninput="maxPrice.value=this.value"/>
+                                        <p>{{minMaxPrice.price__min}}--{{minMaxPrice.price__max}}</p>
                                     </li>
                                     <li class="list-group-item">
-                                        Max: <input type="number" id="maxPrice" onkeyup="rangeInput.value=this.value" min="0" max="100"/>
+                                        Max: <input type="number" value="{{minMaxPrice.price__min}}" max={{minMaxPrice.price__max}}
+                                        min={{minMaxPrice.price__min}} class="form-control" id="maxPrice" onkeyup="rangeInput.value=this.value" id="maxPrice"/>
+                                        <button id="priceFilterBtn" class="btn btn-info btn-sm mt-1">Пошук</button>
                                     </li>
-                                </div>
-                                <div class="field">
-                                    <div>
-                                        <button class="btn btn-outline-success" type="submit">
-                                            Шукати
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <h2 class="is-size-5">Price range</h2>
-                                <div class="field">
-                                    <label>From</label>
-                                    <div class="control">
-                                        <input type="number" name="price_from" class="input" value="{{ price_from }}">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label>To</label>
-                                    <div class="control">
-                                        <input type="number" name="price_to" class="input" value="{{ price_to }}">
-                                    </div>
                                 </div>
                             </div>
                             <div class="col">

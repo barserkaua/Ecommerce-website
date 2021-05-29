@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, User
 from .forms import SignUpForm, OrderForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
-from .filters import ProductFilter
+from django.db.models import Min, Max
 
 
 def search(request):
@@ -30,7 +30,8 @@ def price_search(request):
     sorting = request.GET.get('sorting', '-date_added')
     search_price = Product.objects.filter(price__contains=price_to)
     products = Product.objects.filter(Q(name__icontains=query) |
-                                      Q(description__icontains=query)).filter(price__gte=price_from).filter(price__lte=price_to)
+                                      Q(description__icontains=query)).filter(price__gte=price_from).filter(
+        price__lte=price_to)
 
     if instock:
         products = products.filter(num_available__gte=1)
@@ -51,11 +52,11 @@ def home(request, category_slug=None):
     category_page = None
     products = None
 
-   # myFilter = ProductFilter(request.GET, queryset=category_page)
+    # myFilter = ProductFilter(request.GET, queryset=category_page)
 
     if category_slug != None:
         category_page = get_object_or_404(Category, slug=category_slug)
-        #products = Product.objects.all().order_by('price', category=category_page, available=True)
+        # products = Product.objects.all().order_by('price', category=category_page, available=True)
         products = Product.objects.filter(category=category_page, available=True)
     else:
         products = Product.objects.all().filter(available=True)
@@ -239,3 +240,6 @@ def successfullyOrder(request):
     else:
         form = OrderForm()
     return render(request, 'shop/successfullorder.html', {'form': form})
+
+
+

@@ -25,7 +25,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=250, unique=True)  # як буде відображатися у нашій силці
     description = models.TextField(blank=True)  # опис
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='product', blank=True)
     stock = models.IntegerField()
     available = models.BooleanField(default=True)
