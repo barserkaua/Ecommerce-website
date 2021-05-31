@@ -1,6 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
+
 from .models import Category, Product, Cart, CartItem, Order
 from django.contrib.auth.models import Group, User
 from .forms import SignUpForm, OrderForm
@@ -22,37 +24,37 @@ def search(request):
         return render(request, 'shop/searchresult.html', {'product': product})
 
 
-def price_search(request):
-    query = request.GET.get('query')
-    instock = request.GET.get('instock')
-    price_from = request.GET.get('price_from', 0)
-    price_to = request.GET.get('price_to', 100000)
-    sorting = request.GET.get('sorting', '-date_added')
-    search_price = Product.objects.filter(price__contains=price_to)
-    products = Product.objects.filter(Q(name__icontains=query) |
-                                      Q(description__icontains=query)).filter(price__gte=price_from).filter(
-        price__lte=price_to)
-
-    if instock:
-        products = products.filter(num_available__gte=1)
-
-    contex = {
-        'query': query,
-        'products': products.order_by(sorting),
-        'instock': instock,
-        'price_from': price_from,
-        'price_to': price_to,
-        'search_price': search_price,
-        'sorting': sorting,
-    }
-    return render(request, 'shop/home.html', contex)
+# def price_search(request):
+#    query = request.GET.get('query')
+#    instock = request.GET.get('instock')
+#    price_from = request.GET.get('price_from', 0)
+#    price_to = request.GET.get('price_to', 100000)
+#    sorting = request.GET.get('sorting', '-date_added')
+#    search_price = Product.objects.filter(price__contains=price_to)
+#    products = Product.objects.filter(Q(name__icontains=query) |
+#                                      Q(description__icontains=query)).filter(price__gte=price_from).filter(
+#        price__lte=price_to)
+#
+#    if instock:
+#        products = products.filter(num_available__gte=1)
+#
+#    contex = {
+#        'query': query,
+#        'products': products.order_by(sorting),
+#        'instock': instock,
+#        'price_from': price_from,
+#        'price_to': price_to,
+#        'search_price': search_price,
+#        'sorting': sorting,
+#    }
+#    return render(request, 'shop/home.html', contex)
 
 
 def home(request, category_slug=None):
     category_page = None
-    products = None
 
-    # myFilter = ProductFilter(request.GET, queryset=category_page)
+    min_price = Product.objects.aggregate(Min('price'))
+    max_price = Product.objects.aggregate(Max('price'))
 
     if category_slug != None:
         category_page = get_object_or_404(Category, slug=category_slug)
@@ -61,7 +63,25 @@ def home(request, category_slug=None):
     else:
         products = Product.objects.all().filter(available=True)
 
-    return render(request, 'shop/home.html', {'category': category_page, 'products': products})
+    return render(request, 'shop/home.html', {
+        'category': category_page,
+        'products': products,
+        'min_price': min_price,
+        'max_price': max_price
+    })
+
+
+def filter_data(request):
+    minPrice = request.GET['minPrice']
+    maxPrice = request.GET['maxPrice']
+
+    allProducts = Product.objects.all().order_by('-id').distinct()
+    allProducts = allProducts.filter(price__gte=minPrice)
+    allProducts = allProducts.filter(price__lte=maxPrice)
+
+    t = render_to_string('shop/ajax/product-list.html', {'data': allProducts})
+
+    return JsonResponse({'data': t})
 
 
 def product(request, category_slug, product_slug):
@@ -240,6 +260,3 @@ def successfullyOrder(request):
     else:
         form = OrderForm()
     return render(request, 'shop/successfullorder.html', {'form': form})
-
-
-

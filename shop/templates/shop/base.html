@@ -11,6 +11,16 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{% static 'css/base1.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/cart.css' %}" rel="stylesheet" type="text/css">
+    <!-- Main Jquery -->
+    <script type="text/javascript" src="{{ STATIC_URL }} /static/shop/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+      $(document).ready(
+        function(){
+          $("#jqtest").html("JQuery installed successfully!");
+        }
+      );
+    </script>
+    <p id="jqtest"></p>
 
     <style type="text/css">
         .material-icons.md-36 { font-size: 36px; }

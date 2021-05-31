@@ -6,7 +6,7 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<script type="text/javascript" src="{% static 'shop/product-filter.js' %}"></script>
+
     <title>Bars-market</title>
     <section class="slideshow ">
         <div class="slideshow-container">
@@ -40,14 +40,17 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="row mx-5">
     	<div class="col-lg-12">
             <div class="box-element mx-5">
-                <form action="{% url 'search' %}" method=POST>
+                <form method=POST>
                     {% csrf_token %}
+
                     <div class="container">
                         <div class="row align-items-start text-center">
                             <div class="col">
+
                                 <h2 class="card-header">Price</h2>
                                 <div class="list-group list-group-flush">
                                     <li class="list-group-item">
@@ -62,6 +65,7 @@
                                     </li>
                                 </div>
                             </div>
+
                             <div class="col">
                                 <a href="" class="btn btn-secondary text-uppercase font-weight-bold px-3
                                       dropdown-toggle" data-bs-toggle="dropdown" >Сортувати по...</a>
@@ -70,18 +74,28 @@
                                     <a class="dropdown-item" href="{{category.get_url}}">Від дорогих до дешевих</a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
-    <br>
-    <div class="container">
-        <div class="row">
+    -->
+
+<div class="row mx-1">
+    <!-- Filters -->
+    <div class="col-md-3">
+        {% include 'shop/filters.html' %}
+    </div>
+    <!-- Products -->
+    <div class="col-md-9">
+        <div class="row" id="filteredProducts">
+            <p class="ajaxLoader">Loading...</p>
             {% for product in products %}
-                <div class="col-9 mx-auto col-md-6 col-lg-3">
-                    <div class="card mb-4">
+                <div class="col-lg-3 col-sm-6 mb-4 product-box">
+                    <div class="card shadow">
                         <div class="p-4">
                             <ul class="scale">
                                 <a href="{{product.get_url}}">
@@ -108,4 +122,5 @@
             {% endfor %}
         </div>
     </div>
+</div>
 {% endblock %}
