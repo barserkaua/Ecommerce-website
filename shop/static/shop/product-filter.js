@@ -39,7 +39,7 @@ $(document).ready(function(){
 		var _value=$(this).val();
 		console.log(_value,_min,_max);
 		if(_value < parseInt(_min) || _value > parseInt(_max)){
-			alert('Values should be '+_min+'-'+_max);
+			alert('Ціна повинна бути в діапазоні від '+_min+' до '+_max);
 			$(this).val(_min);
 			$(this).focus();
 			$("#rangeInput").val(_min);

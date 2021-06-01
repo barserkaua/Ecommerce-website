@@ -24,32 +24,6 @@ def search(request):
         return render(request, 'shop/searchresult.html', {'product': product})
 
 
-# def price_search(request):
-#    query = request.GET.get('query')
-#    instock = request.GET.get('instock')
-#    price_from = request.GET.get('price_from', 0)
-#    price_to = request.GET.get('price_to', 100000)
-#    sorting = request.GET.get('sorting', '-date_added')
-#    search_price = Product.objects.filter(price__contains=price_to)
-#    products = Product.objects.filter(Q(name__icontains=query) |
-#                                      Q(description__icontains=query)).filter(price__gte=price_from).filter(
-#        price__lte=price_to)
-#
-#    if instock:
-#        products = products.filter(num_available__gte=1)
-#
-#    contex = {
-#        'query': query,
-#        'products': products.order_by(sorting),
-#        'instock': instock,
-#        'price_from': price_from,
-#        'price_to': price_to,
-#        'search_price': search_price,
-#        'sorting': sorting,
-#    }
-#    return render(request, 'shop/home.html', contex)
-
-
 def home(request, category_slug=None):
     category_page = None
 

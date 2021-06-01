@@ -97,7 +97,7 @@
                 <div class="col-lg-3 col-sm-6 mb-4 product-box">
                     <div class="card shadow">
                         <div class="p-4">
-                            <ul class="scale">
+                            <ul class="scale my-1">
                                 <a href="{{product.get_url}}">
                                     <img class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}">
                                 </a>
@@ -112,7 +112,7 @@
 
                         <div class="box-element product">
                             <a href="{{product.get_url}}"><button  class="btn btn-outline-secondary add-btn my-2" >Переглянути товар</button></a>
-		                    <a class="btn btn-outline-success" href="{% url 'add_product' product.id %}"><strong>Добавити в кошик</strong></a>
+		                    <a class="btn btn-outline-success my-1" href="{% url 'add_product' product.id %}"><strong>Добавити в кошик</strong></a>
                             <h4 style="display: inline-block; float: right">
                                 {{product.price}} ₴
                             </h4>
