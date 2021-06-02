@@ -58,6 +58,15 @@ def filter_data(request):
     return JsonResponse({'data': t})
 
 
+# Load More
+def load_more_data(request):
+    offset = int(request.GET['offset'])
+    limit = int(request.GET['limit'])
+    data = Product.objects.all().order_by('-id')[offset:offset + limit]
+    t = render_to_string('shop/ajax/product-list.html', {'data': data})
+    return JsonResponse({'data': t})
+
+
 def product(request, category_slug, product_slug):
     try:
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
