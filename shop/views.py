@@ -27,6 +27,8 @@ def search(request):
 def home(request, category_slug=None):
     category_page = None
 
+    data = Product.objects.all().order_by('-id')[:4]
+
     min_price = Product.objects.aggregate(Min('price'))
     max_price = Product.objects.aggregate(Max('price'))
 
@@ -38,6 +40,7 @@ def home(request, category_slug=None):
         products = Product.objects.all().filter(available=True)
 
     return render(request, 'shop/home.html', {
+        'data': data,
         'category': category_page,
         'products': products,
         'min_price': min_price,
